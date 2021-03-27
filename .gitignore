@@ -1,3 +1,4 @@
 target/
 logs/
+.mvn/wrapper/
 curd.iml
