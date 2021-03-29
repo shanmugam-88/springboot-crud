@@ -1,12 +1,12 @@
 # springboot-curd
 
-Learning Springboot and Hiberbate with basic CURD opertion. I have used relation database(MySQL) to perform all database related opertaions.
+Learning Spring boot and Hibernate with basic CURD operation. I have used relation database(MySQL) to perform all database related operations.
  
 ## About this application.
-  This is a simple application to create an article. In order to create an article we need to create a user first, once user is created userId will be gernerated 
-  automatically. Then we can create an article using this userId with proper data model, then article id will be generated automatically. 
-  
-  We can retrieve and delete an article by using the correspointing http methods. 
+
+This is a straightforward programme for producing posts. To create a post, we must first create a user, after which the userId will be automatically generated. Then, using this userId and a proper data model, we can create an article, and the article id will be created automatically.
+
+Using the correct http methods, we can retrieve and delete an article. 
   
 ## Tools Used
  * Java
