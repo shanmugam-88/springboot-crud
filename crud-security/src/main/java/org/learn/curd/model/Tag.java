@@ -1,5 +1,7 @@
 package org.learn.curd.model;
 
+import org.learn.curd.model.audit.Auditable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +13,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "TAG")
-public class Tag {
+public class Tag extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -1,5 +1,6 @@
 package org.learn.curd.model;
 
+import org.learn.curd.model.audit.Auditable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "USER")
-public class User implements UserDetails {
+public class User extends Auditable implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

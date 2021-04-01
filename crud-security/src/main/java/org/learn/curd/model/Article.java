@@ -2,13 +2,15 @@ package org.learn.curd.model;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.learn.curd.model.audit.Auditable;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "ARTICLE")
-public class Article {
+public class Article extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

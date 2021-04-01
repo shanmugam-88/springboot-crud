@@ -1,5 +1,7 @@
 package org.learn.curd.model;
 
+import org.learn.curd.model.audit.Auditable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,7 +10,7 @@ import javax.persistence.ManyToMany;
 import java.util.Collection;
 
 @Entity
-public class Privilege {
+public class Privilege extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

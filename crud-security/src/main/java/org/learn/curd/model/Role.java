@@ -1,5 +1,7 @@
 package org.learn.curd.model;
 
+import org.learn.curd.model.audit.Auditable;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,7 +13,7 @@ import javax.persistence.ManyToMany;
 import java.util.Collection;
 
 @Entity
-public class Role {
+public class Role extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
