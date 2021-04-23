@@ -13,17 +13,23 @@ import java.util.Set;
 public class Article extends Auditable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //TODO: generation type identity is best (done)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //TODO: add optional value for the one to one annotation
     @OneToOne
     @JoinColumn(referencedColumnName = "id")
+    //TODO: examine the query generated and make changes if needed.
     private User user;
 
+    @Column(nullable = false)
     private String title;
 
+    @Column(nullable = false)
     private String description;
 
+    //TODO: column should be blob and restrict the size to 1 MB
     private String content;
 
     @ManyToMany

@@ -6,7 +6,7 @@ public class ArticleResponseDTO {
 
     private Long articleId;
 
-    private UserResponseDTO user;
+    //private UserResponseDTO user;
 
     private String title;
 
@@ -24,13 +24,13 @@ public class ArticleResponseDTO {
         this.articleId = articleId;
     }
 
-    public UserResponseDTO getUser() {
+    /*public UserResponseDTO getUser() {
         return user;
     }
 
     public void setUser(UserResponseDTO user) {
         this.user = user;
-    }
+    }*/
 
     public String getTitle() {
         return title;

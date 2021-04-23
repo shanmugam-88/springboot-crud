@@ -7,6 +7,6 @@ public interface UserService {
 
     UserResponseDTO createUser(UserDTO author);
 
-    UserResponseDTO getUser(Long authorId);
+    UserResponseDTO getUser(String authorId);
 
 }

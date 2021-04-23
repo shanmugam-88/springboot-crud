@@ -19,11 +19,14 @@ public class Role extends Auditable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    //TODO: check if this is needed. but write a api that get the users of a particular role with pagination.
     @ManyToMany(mappedBy = "roles")
     private Collection<User> users;
 
+    //TODO: eager needed
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "roles_privileges", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
+    //TODO: see if privilege can be cached.
     private Collection<Privilege> privileges;
 
     private String name;

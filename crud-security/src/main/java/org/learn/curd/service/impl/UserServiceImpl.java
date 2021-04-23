@@ -56,14 +56,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDTO getUser(Long userId) {
+    public UserResponseDTO getUser(String userId) {
         _logger.log(LogLevel.INFO,"Get author service method invoked");
-        Optional<User> user = userRepository.findById(userId);
-        if(user.isEmpty()) {
+        User user = userRepository.findByEmail(userId);
+        if(user==null) {
             _logger.log(LogLevel.ERROR,"User does n't exist " + userId);
             throw new BusinessException(StatusCode.ERR_USR_0001);
         }
-        return modelMapper.map(user.get(), UserResponseDTO.class);
+        return modelMapper.map(user, UserResponseDTO.class);
     }
 
 }

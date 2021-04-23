@@ -27,6 +27,7 @@ public class User extends Auditable implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String firstName;
     private String lastName;
     private String address;
@@ -35,7 +36,7 @@ public class User extends Auditable implements UserDetails {
     private String password;
     private boolean enabled;
 
-
+    //TODO: examine the query generated when querying a article.
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))

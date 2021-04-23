@@ -32,11 +32,11 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(authorId);
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/{emailId}")
     @ApiOperation(value = "API to fetch User")
-    public ResponseEntity<UserResponseDTO> getUser(@PathVariable Long userId) {
+    public ResponseEntity<UserResponseDTO> getUser(@PathVariable String emailId) {
         _logger.debug("get author controller called");
-        UserResponseDTO dto = userServiceImpl.getUser(userId);
+        UserResponseDTO dto = userServiceImpl.getUser(emailId);
         return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
 }

@@ -18,6 +18,9 @@ import org.learn.curd.repository.spec.ArticleSpecification;
 import org.learn.curd.service.ArticleService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -91,10 +94,26 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<ArticleResponseDTO> searchArticle(SearchArticleDTO searchArticle) {
         List<ArticleResponseDTO> responseDTOS = new ArrayList<>();
-        List<Article> articleList = articleRepository.findAll(
+        Pageable pageable = PageRequest.of(0,3);
+        Page<Article> articleList = articleRepository.findAll(
+                Specification.where(
+                        ArticleSpecification.tag(
+                                searchArticle.getTitle(),
+                                searchArticle.getDescription(),
+                                searchArticle.getContent(),
+                                searchArticle.getTag()
+                        )
+                )
+        ,pageable);
+        if(articleList.isEmpty()) {
+            _logger.log(LogLevel.ERROR,"No record found");
+            throw new BusinessException(StatusCode.ERR_0001);
+        }
+        /*List<Article> articleList = articleRepository.findAll(
                         Specification.where(ArticleSpecification.titleContains(searchArticle.getTitle()).
                                 and(ArticleSpecification.descriptionContains(searchArticle.getDescription())).
-                                and(ArticleSpecification.contentContains(searchArticle.getContent()))));
+                                and(ArticleSpecification.contentContains(searchArticle.getContent()).
+                                        and(ArticleSpecification.tag(searchArticle.getTag())))));*/
         articleList.forEach(article -> {
             responseDTOS.add(modelMapper.map(article,ArticleResponseDTO.class));
         });
