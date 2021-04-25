@@ -5,17 +5,22 @@ import io.swagger.annotations.ApiOperation;
 import org.learn.curd.dto.ArticleDTO;
 import org.learn.curd.dto.ArticleResponseDTO;
 import org.learn.curd.dto.SearchArticleDTO;
+import org.learn.curd.dto.SearchResponse;
 import org.learn.curd.logging.BaseLogger;
 import org.learn.curd.logging.CustomLogFactory;
 import org.learn.curd.service.ArticleService;
-import org.learn.curd.service.impl.ArticleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/article")
@@ -44,9 +49,10 @@ public class ArticleController {
 
     @PostMapping("/search")
     @ApiOperation(value = "API to search an article")
-    public ResponseEntity<List<ArticleResponseDTO>> searchArticle(@RequestBody SearchArticleDTO searchArticleDTO) {
-        List<ArticleResponseDTO> response = articleServiceImpl.searchArticle(searchArticleDTO);
-        if(response.isEmpty()) {
+    public ResponseEntity<SearchResponse> searchArticle(@RequestBody SearchArticleDTO searchArticleDTO,
+                                                        @RequestParam(defaultValue = "0") int offset , @RequestParam(defaultValue = "1") int limit) {
+        SearchResponse response = articleServiceImpl.searchArticle(searchArticleDTO,offset,limit);
+        if(response.getArticles()==null || response.getArticles().isEmpty()) {
             ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         return ResponseEntity.status(HttpStatus.OK).body(response);

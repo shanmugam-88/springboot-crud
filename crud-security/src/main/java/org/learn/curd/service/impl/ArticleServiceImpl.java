@@ -2,7 +2,9 @@ package org.learn.curd.service.impl;
 
 import org.learn.curd.dto.ArticleDTO;
 import org.learn.curd.dto.ArticleResponseDTO;
+import org.learn.curd.dto.ResponsePageable;
 import org.learn.curd.dto.SearchArticleDTO;
+import org.learn.curd.dto.SearchResponse;
 import org.learn.curd.exception.BusinessException;
 import org.learn.curd.exception.StatusCode;
 import org.learn.curd.logging.BaseLogger;
@@ -92,9 +94,9 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<ArticleResponseDTO> searchArticle(SearchArticleDTO searchArticle) {
+    public SearchResponse searchArticle(SearchArticleDTO searchArticle,int offSet,int limit) {
         List<ArticleResponseDTO> responseDTOS = new ArrayList<>();
-        Pageable pageable = PageRequest.of(0,3);
+        Pageable pageable = PageRequest.of(offSet,limit);
         Page<Article> articleList = articleRepository.findAll(
                 Specification.where(
                         ArticleSpecification.tag(
@@ -107,17 +109,13 @@ public class ArticleServiceImpl implements ArticleService {
         ,pageable);
         if(articleList.isEmpty()) {
             _logger.log(LogLevel.ERROR,"No record found");
-            throw new BusinessException(StatusCode.ERR_0001);
+            throw new BusinessException(StatusCode.ERR_0001,"No record found");
         }
-        /*List<Article> articleList = articleRepository.findAll(
-                        Specification.where(ArticleSpecification.titleContains(searchArticle.getTitle()).
-                                and(ArticleSpecification.descriptionContains(searchArticle.getDescription())).
-                                and(ArticleSpecification.contentContains(searchArticle.getContent()).
-                                        and(ArticleSpecification.tag(searchArticle.getTag())))));*/
-        articleList.forEach(article -> {
+        articleList.getContent().forEach(article -> {
             responseDTOS.add(modelMapper.map(article,ArticleResponseDTO.class));
         });
-        return responseDTOS;
+        ResponsePageable responsePageable = new ResponsePageable(articleList.getTotalElements(), offSet,limit);
+        return new SearchResponse(responseDTOS,responsePageable);
     }
 
     @Override

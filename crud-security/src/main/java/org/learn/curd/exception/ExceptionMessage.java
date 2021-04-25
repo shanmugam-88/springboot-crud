@@ -16,5 +16,6 @@ public class ExceptionMessage {
         errorMessage.put("ERR_ACCESS_0003", "Unable to load user for given token");
         errorMessage.put("ERR_ACCESS_0004", "Unable to load user details for given token");
         errorMessage.put("ERR_ACCESS_0005", "Invalid token");
+        errorMessage.put("ERR_0001", "Unable to process the request");
     }
 }
